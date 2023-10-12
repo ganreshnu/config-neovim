@@ -31,6 +31,7 @@ return {
 				},
 				clangd = {},
 				pyright = {},
+				neocmake = {},
 			}
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
