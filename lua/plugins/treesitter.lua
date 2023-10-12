@@ -11,10 +11,11 @@ return {
 		build = ':TSUpdate',
 		opts = {
 			-- Add languages to be installed here that you want installed for treesitter
-			ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx',
+			ensure_installed = { 'lua', 'python', 'tsx',
 				'typescript',
+				'javascript',
 				'vimdoc',
-				'vim', 'markdown' },
+				'vim', 'bash' },
 
 			highlight = { enable = true, use_languagetree = true, },
 			indent = { enable = true },
