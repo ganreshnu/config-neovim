@@ -2,6 +2,21 @@
 --
 -- nvim-lspconfig plugin.
 
+local servers = {
+	lua_ls = {
+		Lua = {
+			workspace = {
+				checkThirdParty = false,
+			},
+			telemetry = { enable = false },
+		}
+	},
+	clangd = {},
+	pyright = {},
+	neocmake = {},
+	jsonls = {},
+}
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -10,39 +25,29 @@ return {
 			{
 				'williamboman/mason-lspconfig.nvim',
 				dependencies = { 'williamboman/mason.nvim' },
-				config = true,
+				opts = {
+					ensure_installed = vim.tbl_keys(servers),
+				},
 			},
 
 			-- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+			{ 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 			-- Additional lua configuration, makes nvim stuff amazing!
-			{ 'folke/neodev.nvim', config = true },
+			-- { 'folke/neodev.nvim', config = true },
 			{ 'hrsh7th/nvim-cmp' }
 		},
-		opts = {},
-		config = function(_, opts)
-			local servers = {
-				lua_ls = {
-					Lua = {
-						workspace = {checkThirdParty = false},
-						telemetry = {enable = false },
-					}
-				},
-				clangd = {},
-				pyright = {},
-				neocmake = {},
-			}
-
+		config = function()
+			-- setup the client capabilities
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
+			-- run when the buffer is attached
 			local on_attach = function(_, bufnr)
 				require("keymaps").lspconfig(bufnr)
 			end
-			require("mason-lspconfig").setup {
-				ensure_installed = vim.tbl_keys(servers),
-			}
+
+			-- setup the configuration handlers
 			require("mason-lspconfig").setup_handlers {
 				function(server_name)
 					require("lspconfig")[server_name].setup {

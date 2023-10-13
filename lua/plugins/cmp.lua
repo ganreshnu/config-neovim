@@ -2,15 +2,17 @@ return {
 	{
 		'hrsh7th/nvim-cmp',
 		dependencies = {
+			{
+				"L3MON4D3/LuaSnip",
+			},
 			-- cmp sources plugins
 			{
-				"hrsh7th/cmp-nvim-lua",
+				-- "hrsh7th/cmp-nvim-lua",
 				"hrsh7th/cmp-nvim-lsp",
 				"hrsh7th/cmp-buffer",
 				"hrsh7th/cmp-path",
 				"saadparwaiz1/cmp_luasnip",
 			},
-			"L3MON4D3/LuaSnip",
 		},
 		opts = {
 			snippet = {
@@ -19,11 +21,11 @@ return {
 				end,
 			},
 			sources = {
+				-- { name = "nvim_lua" },
 				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
 				{ name = "buffer" },
-				{ name = "nvim_lua" },
 				{ name = "path" },
+				{ name = "luasnip" },
 			},
 		},
 		config = function(_, opts)
