@@ -6,8 +6,9 @@ vim.g.mapleader = ' '
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
-vim.opt.laststatus = 3
+vim.opt.laststatus = 2
 vim.opt.showmode = false
+vim.opt.ruler = true
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -38,7 +39,6 @@ vim.opt.number = true
 vim.opt.numberwidth = 2
 -- Set relative line numbers
 vim.opt.relativenumber = true
-vim.opt.ruler = false
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'

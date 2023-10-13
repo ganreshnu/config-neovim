@@ -38,7 +38,10 @@ M.lspconfig = function(bufnr)
 		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
 	end
 
-
+	nmap("K", vim.lsp.buf.hover, "type information")
+	nmap("gD", vim.lsp.buf.declaration, "goto declaration")
+	nmap("gd", vim.lsp.buf.definition, "goto definition")
+	nmap("gi", vim.lsp.buf.implementation, "goto implementation")
 
 end
 
@@ -76,6 +79,17 @@ M.cmp = function()
       end
     end, { 'i', 's' }),
 	})
+end
+
+M.comment = function()
+	return {
+		{ "gcc", mode = "n", desc = "Comment toggle current line" },
+		{ "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
+		{ "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
+		{ "gbc", mode = "n", desc = "Comment toggle current block" },
+		{ "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
+		{ "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
+	}
 end
 
 return M
