@@ -33,6 +33,7 @@ vim.opt.mouse = 'a'
 
 -- Set highlight on search
 vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
 -- Make line numbers default
 vim.opt.number = true
