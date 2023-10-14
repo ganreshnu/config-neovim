@@ -12,6 +12,7 @@ return {
 				"hrsh7th/cmp-buffer",
 				"hrsh7th/cmp-path",
 				"saadparwaiz1/cmp_luasnip",
+				"rafamadriz/friendly-snippets"
 			},
 		},
 		opts = {
@@ -22,13 +23,14 @@ return {
 			},
 			sources = {
 				-- { name = "nvim_lua" },
+				-- { name = "luasnip" },
 				{ name = "nvim_lsp" },
-				{ name = "buffer" },
-				{ name = "path" },
-				{ name = "luasnip" },
+				-- { name = "buffer" },
+				-- { name = "path" },
 			},
 		},
 		config = function(_, opts)
+			require("luasnip.loaders.from_vscode").lazy_load()
 			opts.mapping = require('keymaps').cmp()
 			require("cmp").setup(opts)
 		end,

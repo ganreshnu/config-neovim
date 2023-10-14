@@ -8,13 +8,15 @@ local servers = {
 			workspace = {
 				checkThirdParty = false,
 			},
-			telemetry = { enable = false },
 		}
 	},
 	clangd = {},
 	pyright = {},
 	neocmake = {},
 	jsonls = {},
+	bashls = {
+		filetypes = { 'sh', 'bash' },
+	}
 }
 
 return {

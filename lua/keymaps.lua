@@ -14,7 +14,6 @@ M.basic = function()
 	-- Quickly exit from insert mode
 	vim.keymap.set('i', 'kj', '<ESC>', { desc = 'Return to normal mode' })
 
-
 	-- Diagnostic keymaps
 	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -23,15 +22,15 @@ M.basic = function()
 end
 
 M.telescope = function()
-	vim.keymap.set('n', "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
+	vim.keymap.set('n', "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "[f]ind [f]iles" })
 	vim.keymap.set('n', "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-		{ desc = "Find all" })
+		{ desc = "[f]ind [a]ll files" })
 	vim.keymap.set('n', "<leader>fw", "<cmd>Telescope git_files<CR>", { desc = "[f]ind [w]orkspace files" })
-	vim.keymap.set('n', "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live grep" })
-	vim.keymap.set('n', "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Find buffers" })
-	vim.keymap.set('n', "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help page" })
-	vim.keymap.set('n', "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "Find oldfiles" })
-	vim.keymap.set('n', "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "Find in current buffer" })
+	vim.keymap.set('n', "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "[f]ind with [g]rep" })
+	vim.keymap.set('n', "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "[f]ind [b]uffers" })
+	vim.keymap.set('n', "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "[f]ind in [h]elp" })
+	vim.keymap.set('n', "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[f]ind [o]ld files" })
+	vim.keymap.set('n', "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "buffer [f]ind fu[z]zy" })
 end
 
 M.lspconfig = function(bufnr)
@@ -49,12 +48,14 @@ end
 M.cmp = function()
 	local cmp = require('cmp')
 	local luasnip = require('luasnip')
+	local comment = require('Comment')
+	local mason = require('mason')
 
 	return cmp.mapping.preset.insert({
 		['<C-n>'] = cmp.mapping.select_next_item(),
 		['<C-p>'] = cmp.mapping.select_prev_item(),
-		['<C-d>'] = cmp.mapping.scroll_docs(-4),
-		['<C-u>'] = cmp.mapping.scroll_docs(4),
+		['<C-u>'] = cmp.mapping.scroll_docs(-4),
+		['<C-d>'] = cmp.mapping.scroll_docs(4),
 		-- ['<C-Space>'] = cmp.mapping.complete {},
 		["<C-e>"] = cmp.mapping.close(),
 		['<CR>'] = cmp.mapping.confirm {

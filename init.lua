@@ -2,7 +2,13 @@
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
--- vim.g.maplocalleader = ' '
+-- vim.g.maplocalleader = ','
+vim.g.netrw_banner = 0
+vim.g.netrw_browse_split = 4
+vim.g.netrw_altv = 1
+vim.g.netrw_liststyle = 3
+
+vim.opt.title = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -14,12 +20,11 @@ vim.opt.ruler = true
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 
 -- Set tabstop to something reasonable
 vim.opt.expandtab = false
 vim.opt.shiftwidth = 2
-vim.opt.smartindent = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 
@@ -41,14 +46,15 @@ vim.opt.numberwidth = 2
 -- Set relative line numbers
 vim.opt.relativenumber = true
 
--- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'number'
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 -- NOTE: You should make sure your terminal supports this
 vim.opt.termguicolors = true
 -- Enable break indent
 vim.opt.breakindent = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 -- Save undo history
 vim.opt.undofile = true
@@ -59,8 +65,13 @@ vim.opt.timeoutlen = 300
 
 vim.opt.whichwrap:append "<>[]hl"
 
+vim.opt.scrolloff = 6
+vim.opt.sidescrolloff = 6
+
+vim.opt.errorbells = false
+
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = 'menuone,noselect'
+vim.opt.completeopt = { 'menuone', 'noselect' }
 
 -- disable some default providers
 for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
