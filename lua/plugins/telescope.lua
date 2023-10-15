@@ -13,6 +13,11 @@ return {
 		},
 		cmd = "Telescope",
 		opts = {
+			pickers = {
+				colorscheme = {
+					enable_preview = true
+				},
+			},
 			extensions = {
 				fzf = {
 					fuzzy = true,

@@ -1,3 +1,35 @@
+--
+-- my nvim conf
+--
+
+-- installed languages
+local languages = {
+  {
+    treesitter_ensure_installed = { 'cmake' },
+    lsp_servers = { neocmake = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'c', 'cpp' },
+    lsp_servers = { clangd = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'lua' },
+    lsp_servers = { lua_ls = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'python' },
+    lsp_servers = { pyright = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'bash' },
+    lsp_servers = { bashls = { filetypes = { 'bash' } } },
+  },
+  {
+    treesitter_ensure_installed = { 'json' },
+    lsp_servers = { jsonls = {} },
+  },
+}
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -71,7 +103,8 @@ vim.opt.sidescrolloff = 6
 vim.opt.errorbells = false
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = { 'menuone', 'noselect' }
+vim.opt.completeopt = { 'menuone', 'longest' }
+
 
 -- disable some default providers
 for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
@@ -89,6 +122,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- set the treesitter languages and lsp server options
+local function combine_language_property(property)
+  local result = {}
+  for _, language in ipairs(languages) do
+    if vim.tbl_islist(language[property]) then
+      for _, v in ipairs(language[property]) do
+        table.insert(result, v)
+      end
+    else
+      result = vim.tbl_extend("error", result, language[property])
+    end
+  end
+  return result
+end
+vim.g.treesitter_ensure_installed = combine_language_property('treesitter_ensure_installed')
+vim.g.lsp_servers = combine_language_property('lsp_servers')
+
+-- setup our basic keymaps
 require("keymaps").basic()
 
 -- Install package manager
@@ -111,7 +162,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('plugins')
 
 -- set the colorscheme
-vim.cmd('colorscheme base16-black-metal-bathory')
+vim.cmd('colorscheme base16-default-dark')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

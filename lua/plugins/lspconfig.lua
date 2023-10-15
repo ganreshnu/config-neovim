@@ -2,23 +2,6 @@
 --
 -- nvim-lspconfig plugin.
 
-local servers = {
-	lua_ls = {
-		Lua = {
-			workspace = {
-				checkThirdParty = false,
-			},
-		}
-	},
-	clangd = {},
-	pyright = {},
-	neocmake = {},
-	jsonls = {},
-	bashls = {
-		filetypes = { 'sh', 'bash' },
-	}
-}
-
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -28,7 +11,7 @@ return {
 				'williamboman/mason-lspconfig.nvim',
 				dependencies = { 'williamboman/mason.nvim' },
 				opts = {
-					ensure_installed = vim.tbl_keys(servers),
+					ensure_installed = vim.tbl_keys(vim.g.lsp_servers),
 				},
 			},
 
@@ -36,8 +19,8 @@ return {
 			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 			{ 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 			-- Additional lua configuration, makes nvim stuff amazing!
-			-- { 'folke/neodev.nvim', config = true },
-			{ 'hrsh7th/nvim-cmp' }
+			{ 'folke/neodev.nvim', opts = {} },
+			'hrsh7th/nvim-cmp'
 		},
 		config = function()
 			-- setup the client capabilities
@@ -55,8 +38,8 @@ return {
 					require("lspconfig")[server_name].setup {
 						capabilities = capabilities,
 						on_attach = on_attach,
-						settings = servers[server_name],
-						filetypes = (servers[server_name] or {}).filetypes,
+						settings = vim.g.lsp_servers[server_name],
+						filetypes = (vim.g.lsp_servers[server_name] or {}).filetypes,
 					}
 				end
 			}

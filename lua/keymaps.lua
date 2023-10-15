@@ -14,6 +14,13 @@ M.basic = function()
 	-- Quickly exit from insert mode
 	vim.keymap.set('i', 'kj', '<ESC>', { desc = 'Return to normal mode' })
 
+	vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Left window' })
+	vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Right window' })
+	vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Down window' })
+	vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Up window' })
+
+	vim.keymap.set('n', '<leader>t', "<cmd>25Lex<CR>", { desc = "file [t]reeview" })
+
 	-- Diagnostic keymaps
 	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -48,8 +55,6 @@ end
 M.cmp = function()
 	local cmp = require('cmp')
 	local luasnip = require('luasnip')
-	local comment = require('Comment')
-	local mason = require('mason')
 
 	return cmp.mapping.preset.insert({
 		['<C-n>'] = cmp.mapping.select_next_item(),
@@ -64,14 +69,15 @@ M.cmp = function()
 		},
 		['<Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
-				cmp.mapping.complete{}
+				cmp.select_next_item()
+				cmp.close()
 			elseif luasnip.expand_or_locally_jumpable() then
 				luasnip.expand_or_jump()
 			else
 				fallback()
 			end
 		end, { 'i', 's' }),
-		['<S-Tab>'] = cmp.mapping(function(fallback)
+		--[[ ['<S-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.mapping.close()
 			elseif luasnip.locally_jumpable(-1) then
@@ -79,7 +85,7 @@ M.cmp = function()
 			else
 				fallback()
 			end
-		end, { 'i', 's' }),
+		end, { 'i', 's' }), ]]
 	})
 end
 
