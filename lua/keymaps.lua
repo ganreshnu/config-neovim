@@ -81,8 +81,8 @@ M.cmp = function()
 		},
 		['<Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
-				cmp.select_next_item()
-				cmp.close()
+				cmp.mapping.select_next_item()
+				cmp.mapping.close()
 			elseif luasnip.expand_or_locally_jumpable() then
 				luasnip.expand_or_jump()
 			else
@@ -99,6 +99,10 @@ M.cmp = function()
 			end
 		end, { 'i', 's' }), ]]
 	})
+end
+
+M.dap = function()
+
 end
 
 return M

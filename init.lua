@@ -11,6 +11,7 @@ local languages = {
   {
     treesitter_ensure_installed = { 'c', 'cpp' },
     lsp_servers = { clangd = {} },
+    debug_adapters = { cppdbg = {} },
   },
   {
     treesitter_ensure_installed = { 'lua' },
@@ -19,14 +20,35 @@ local languages = {
   {
     treesitter_ensure_installed = { 'python' },
     lsp_servers = { pyright = {} },
+    debug_adapters = { python = {} },
   },
   {
     treesitter_ensure_installed = { 'bash' },
-    lsp_servers = { bashls = { filetypes = { 'bash' } } },
+    lsp_servers = { bashls = { filetypes = { 'sh', 'bash' } } },
+    debug_adapters = { bash = {} },
   },
   {
     treesitter_ensure_installed = { 'json' },
     lsp_servers = { jsonls = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'perl' },
+    lsp_servers = { perlnavigator = {} },
+    debug_adapters = { perl = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'awk' },
+    lsp_servers = { awk_ls = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'javascript', 'typescript' },
+    lsp_servers = { tsserver = {} },
+    debug_adapters = { js = {} },
+  },
+  {
+    treesitter_ensure_installed = { 'rust' },
+    lsp_servers = { rust_analyzer = {} },
+    debug_adapters = { codelldb = {} },
   },
 }
 
@@ -126,6 +148,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 local function combine_language_property(property)
   local result = {}
   for _, language in ipairs(languages) do
+    if language[property] == nil then goto continue end
     if vim.tbl_islist(language[property]) then
       for _, v in ipairs(language[property]) do
         table.insert(result, v)
@@ -133,11 +156,13 @@ local function combine_language_property(property)
     else
       result = vim.tbl_extend("error", result, language[property])
     end
+    ::continue::
   end
   return result
 end
 vim.g.treesitter_ensure_installed = combine_language_property('treesitter_ensure_installed')
 vim.g.lsp_servers = combine_language_property('lsp_servers')
+vim.g.debug_adapters = combine_language_property('debug_adapters')
 
 -- setup our basic keymaps
 require("keymaps").basic()
