@@ -1,5 +1,8 @@
 local M = {}
 
+-- 
+-- basic keybindings
+--
 M.basic = function()
 	-- [[ Basic Keymaps ]]
 
@@ -28,6 +31,9 @@ M.basic = function()
 	vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 end
 
+-- 
+-- telescope keybindings
+--
 M.telescope = function()
 	vim.keymap.set('n', "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "[f]ind [f]iles" })
 	vim.keymap.set('n', "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
@@ -40,6 +46,9 @@ M.telescope = function()
 	vim.keymap.set('n', "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "buffer [f]ind fu[z]zy" })
 end
 
+-- 
+-- lsp keybindings
+--
 M.lspconfig = function(bufnr)
 	local nmap = function(keys, func, desc)
 		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
@@ -52,6 +61,9 @@ M.lspconfig = function(bufnr)
 	nmap("<leader>F", vim.lsp.buf.format, "format buffer")
 end
 
+-- 
+-- autocomplete keybindings
+--
 M.cmp = function()
 	local cmp = require('cmp')
 	local luasnip = require('luasnip')
@@ -87,17 +99,6 @@ M.cmp = function()
 			end
 		end, { 'i', 's' }), ]]
 	})
-end
-
-M.comment = function()
-	return {
-		{ "gcc", mode = "n",          desc = "Comment toggle current line" },
-		{ "gc",  mode = { "n", "o" }, desc = "Comment toggle linewise" },
-		{ "gc",  mode = "x",          desc = "Comment toggle linewise (visual)" },
-		{ "gbc", mode = "n",          desc = "Comment toggle current block" },
-		{ "gb",  mode = { "n", "o" }, desc = "Comment toggle blockwise" },
-		{ "gb",  mode = "x",          desc = "Comment toggle blockwise (visual)" },
-	}
 end
 
 return M
