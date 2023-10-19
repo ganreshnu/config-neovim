@@ -12,6 +12,22 @@ return {
 		},
 	},
 	{
+		'rcarriga/nvim-dap-ui',
+		opts = {},
+		config = function(_, opts)
+			local dapui = require('dapui')
+			dapui.setup(opts)
+
+			local dap = require('dap')
+			dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+			dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+			dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+			-- set keymaps
+			require('keymaps').dap()
+		end,
+	},
+	--[[ {
 		'jay-babu/mason-nvim-dap.nvim',
 		cond = false,
 		dependencies = {
@@ -34,21 +50,5 @@ return {
 				end,
 			},
 		},
-	},
-	{
-		'rcarriga/nvim-dap-ui',
-		opts = {},
-		config = function(_, opts)
-			local dapui = require('dapui')
-			dapui.setup(opts)
-
-			local dap = require('dap')
-			dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-			dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-			dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-			-- set keymaps
-			require('keymaps').dap()
-		end,
-	},
+	}, ]]
 }
