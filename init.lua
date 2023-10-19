@@ -34,7 +34,7 @@ local languages = {
   {
     treesitter_ensure_installed = { 'perl' },
     lsp_servers = { perlnavigator = {} },
-    debug_adapters = { perl = {} },
+    -- debug_adapters = { perl = {} }, -- NOT in mason-nvim-dap
   },
   {
     treesitter_ensure_installed = { 'awk' },
@@ -187,7 +187,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('plugins')
 
 -- set the colorscheme
-vim.cmd('colorscheme base16-default-dark')
+-- vim.cmd('colorscheme base16-default-dark')
+vim.cmd('colorscheme base16-ia-dark')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

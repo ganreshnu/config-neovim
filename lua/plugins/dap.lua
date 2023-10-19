@@ -23,7 +23,15 @@ return {
 
 			-- You can provide additional configuration to the handlers,
 			-- see mason-nvim-dap README for more information
-			-- handlers = {},
+			handlers = {
+				function(config)
+					require('mason-nvim-dap').default_setup(config)
+				end,
+				cppdbg = function(config)
+
+					require('mason-nvim-dap').default_setup(config)
+				end,
+			},
 		},
 	},
 	{
