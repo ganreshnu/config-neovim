@@ -5,48 +5,68 @@
 -- installed languages
 local languages = {
   {
-    treesitter_ensure_installed = { 'cmake' },
+    filetype = { 'cmake' },
     lsp_servers = { neocmake = {} },
   },
   {
-    treesitter_ensure_installed = { 'c', 'cpp' },
+    filetype = { 'c', 'cpp' },
     lsp_servers = { clangd = {} },
-    debug_adapters = { cppdbg = {} },
+    debug_adapters = {
+      cpp = {
+        adapter = {
+          type = 'executable',
+          command = vim.fn.exepath('OpenDebugAD7'),
+        },
+        configurations = {
+          {
+            name = 'Launch file',
+            type = 'cpp',
+            request = 'launch',
+            program = function()
+              return 'noprog'
+              -- return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = '${workspaceFolder}',
+            stopAtEntry = true,
+          }
+        },
+      }
+    },
   },
   {
-    treesitter_ensure_installed = { 'lua' },
+    filetype = { 'lua' },
     lsp_servers = { lua_ls = {} },
   },
   {
-    treesitter_ensure_installed = { 'python' },
+    filetype = { 'python' },
     lsp_servers = { pyright = {} },
     debug_adapters = { python = {} },
   },
   {
-    treesitter_ensure_installed = { 'bash' },
+    filetype = { 'bash' },
     lsp_servers = { bashls = { filetypes = { 'sh', 'bash' } } },
     debug_adapters = { bash = {} },
   },
   {
-    treesitter_ensure_installed = { 'json' },
+    filetype = { 'json' },
     lsp_servers = { jsonls = {} },
   },
   {
-    treesitter_ensure_installed = { 'perl' },
+    filetype = { 'perl' },
     lsp_servers = { perlnavigator = {} },
     -- debug_adapters = { perl = {} }, -- NOT in mason-nvim-dap
   },
   {
-    treesitter_ensure_installed = { 'awk' },
+    filetype = { 'awk' },
     lsp_servers = { awk_ls = {} },
   },
   {
-    treesitter_ensure_installed = { 'javascript', 'typescript' },
+    filetype = { 'javascript', 'typescript' },
     lsp_servers = { tsserver = {} },
     debug_adapters = { js = {} },
   },
   {
-    treesitter_ensure_installed = { 'rust' },
+    filetype = { 'rust' },
     lsp_servers = { rust_analyzer = {} },
     debug_adapters = { codelldb = {} },
   },
@@ -160,7 +180,7 @@ local function combine_language_property(property)
   end
   return result
 end
-vim.g.treesitter_ensure_installed = combine_language_property('treesitter_ensure_installed')
+vim.g.treesitter_ensure_installed = combine_language_property('filetype')
 vim.g.lsp_servers = combine_language_property('lsp_servers')
 vim.g.debug_adapters = combine_language_property('debug_adapters')
 
