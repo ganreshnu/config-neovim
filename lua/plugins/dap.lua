@@ -8,11 +8,12 @@ return {
 			-- Creates a beautiful debugger UI
 			'rcarriga/nvim-dap-ui',
 			-- Installs the debug adapters for you
-			'jay-babu/mason-nvim-dap.nvim',
+			-- 'jay-babu/mason-nvim-dap.nvim',
 		},
 	},
 	{
 		'jay-babu/mason-nvim-dap.nvim',
+		cond = false,
 		dependencies = {
 			'williamboman/mason.nvim',
 		},
