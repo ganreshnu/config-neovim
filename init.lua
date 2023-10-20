@@ -13,23 +13,13 @@ local languages = {
     lsp_servers = { clangd = {} },
     debug_adapters = {
       cpp = {
-        adapter = {
-          type = 'executable',
-          command = vim.fn.exepath('OpenDebugAD7'),
-        },
-        --[[ configurations = {
-          {
-            name = 'Launch file',
-            type = 'cpp',
-            request = 'launch',
-            program = function()
-              return 'noprog'
-              -- return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            cwd = '${workspaceFolder}',
-            stopAtEntry = true,
+        adapter = function()
+          return {
+            name = 'cpptools',
+            type = 'executable',
+            command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
           }
-        }, ]]
+        end,
       }
     },
   },
@@ -40,12 +30,12 @@ local languages = {
   {
     filetype = { 'python' },
     lsp_servers = { pyright = {} },
-    debug_adapters = { python = {} },
+    -- debug_adapters = { python = {} },
   },
   {
     filetype = { 'bash' },
     lsp_servers = { bashls = { filetypes = { 'sh', 'bash' } } },
-    debug_adapters = { bash = {} },
+    -- debug_adapters = { bash = {} },
   },
   {
     filetype = { 'json' },
@@ -63,12 +53,12 @@ local languages = {
   {
     filetype = { 'javascript', 'typescript' },
     lsp_servers = { tsserver = {} },
-    debug_adapters = { js = {} },
+    -- debug_adapters = { js = {} },
   },
   {
     filetype = { 'rust' },
     lsp_servers = { rust_analyzer = {} },
-    debug_adapters = { codelldb = {} },
+    -- debug_adapters = { codelldb = {} },
   },
 }
 

@@ -9,12 +9,16 @@ return {
 			'rcarriga/nvim-dap-ui',
 			-- Installs the debug adapters for you
 			-- 'jay-babu/mason-nvim-dap.nvim',
+			'williamboman/mason.nvim',
 		},
 		config = function()
 			local dap = require('dap')
 			for filetype, opts in pairs(vim.g.debug_adapters) do
-				dap.adapters[filetype] = opts.adapter
-				dap.configurations[filetype] = opts.configurations
+				if vim.is_callable(opts.adapter) then
+					dap.adapters[filetype] = opts.adapter()
+				else
+					dap.adapters[filetype] = opts.adapter
+				end
 			end
 		end
 	},
