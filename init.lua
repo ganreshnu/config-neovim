@@ -17,7 +17,7 @@ local languages = {
           type = 'executable',
           command = vim.fn.exepath('OpenDebugAD7'),
         },
-        configurations = {
+        --[[ configurations = {
           {
             name = 'Launch file',
             type = 'cpp',
@@ -29,7 +29,7 @@ local languages = {
             cwd = '${workspaceFolder}',
             stopAtEntry = true,
           }
-        },
+        }, ]]
       }
     },
   },
