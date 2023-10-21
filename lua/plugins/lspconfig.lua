@@ -11,7 +11,7 @@ return {
 				'williamboman/mason-lspconfig.nvim',
 				dependencies = { 'williamboman/mason.nvim' },
 				opts = {
-					ensure_installed = vim.tbl_keys(vim.g.lsp_servers),
+					ensure_installed = { 'lua_ls' },
 				},
 			},
 
