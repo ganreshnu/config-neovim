@@ -13,14 +13,14 @@ return {
 		},
 		config = function()
 			local dap = require('dap')
-			for filetype, opts in pairs(vim.g.debug_adapters) do
-				if vim.is_callable(opts.adapter) then
-					dap.adapters[filetype] = opts.adapter()
-				else
-					dap.adapters[filetype] = opts.adapter
+			for _, lang in ipairs(vim.g.languages) do
+				for name, adapter in pairs(lang.debug_adapters) do
+					dap.adapters[name] = function(callback, config)
+
+					end
 				end
 			end
-		end
+		end,
 	},
 	{
 		'rcarriga/nvim-dap-ui',

@@ -12,15 +12,12 @@ local languages = {
     filetype = { 'c', 'cpp' },
     lsp_servers = { clangd = {} },
     debug_adapters = {
-      cpp = {
-        adapter = function()
-          return {
-            name = 'cpptools',
-            type = 'executable',
-            command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
-          }
-        end,
-      }
+      cpptools = function()
+        return {
+          type = 'executable',
+          command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
+        }
+      end,
     },
   },
   {
