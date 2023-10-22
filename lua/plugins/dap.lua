@@ -16,6 +16,7 @@ return {
 			dap.set_log_level('TRACE')
 			for _, lang in ipairs(vim.g.languages) do
 				for name, adapter in pairs(lang.debug_adapters or {}) do
+					-- see if adapter is installed
 					dap.adapters[name] = adapter()
 					local name_to_filetypes = {}
 					name_to_filetypes[name] = lang.filetypes

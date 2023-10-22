@@ -45,7 +45,15 @@ vim.g.languages = {
   {
     filetypes = { 'bash' },
     lsp_servers = { bashls = { filetypes = { 'sh', 'bash' } } },
-    -- debug_adapters = { bash = {} },
+    debug_adapters = {
+      bash = function()
+        return {
+          id = 'bash',
+          type = 'executable',
+          command = require('mason-core.path').bin_prefix('bash-language-server')
+        }
+      end,
+    },
   },
   {
     filetypes = { 'json' },
