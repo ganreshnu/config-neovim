@@ -13,7 +13,7 @@ return {
 		},
 		config = function()
 			local dap = require('dap')
-			-- dap.set_log_level('TRACE')
+			dap.set_log_level('TRACE')
 			for _, lang in ipairs(vim.g.languages) do
 				for name, adapter in pairs(lang.debug_adapters or {}) do
 					-- see if adapter is installed

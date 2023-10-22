@@ -12,7 +12,7 @@ vim.g.languages = {
     filetypes = { 'c', 'cpp' },
     lsp_servers = { clangd = {} },
     debug_adapters = {
-      cpptools = function()
+      ["cpptools"] = function()
         -- see :h *dap-adapter*
         return {
           id = 'cppdbg', -- the dap adapterID
@@ -20,9 +20,8 @@ vim.g.languages = {
           command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
         }
       end,
-      codelldb = function()
+      ["codelldb"] = function()
         return {
-          id = 'codelldb',
           type = 'server',
           port = "${port}",
           executable = {
@@ -43,14 +42,14 @@ vim.g.languages = {
     -- debug_adapters = { python = {} },
   },
   {
-    filetypes = { 'bash' },
+    filetypes = { 'sh', 'bash' },
     lsp_servers = { bashls = { filetypes = { 'sh', 'bash' } } },
     debug_adapters = {
-      bash = function()
+      ["bash-debug-adapter"] = function()
         return {
-          id = 'bash',
           type = 'executable',
-          command = require('mason-core.path').bin_prefix('bash-language-server')
+          command = require('mason-core.path').bin_prefix('bash-debug-adapter'),
+          args = { 'start' },
         }
       end,
     },
@@ -84,7 +83,8 @@ vim.g.languages = {
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
--- vim.g.maplocalleader = ','
+vim.g.maplocalleader = ','
+
 vim.g.netrw_banner = 0
 vim.g.netrw_browse_split = 4
 vim.g.netrw_altv = 1
