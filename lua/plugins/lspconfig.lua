@@ -38,7 +38,7 @@ return {
 					require("lspconfig")[server_name].setup {
 						capabilities = capabilities,
 						on_attach = on_attach,
-						settings = vim.g.lsp_servers[server_name],
+						settings = vim.g.lsp_servers[server_name] or {},
 						filetypes = (vim.g.lsp_servers[server_name] or {}).filetypes,
 					}
 				end
