@@ -14,10 +14,14 @@ return {
 		config = function()
 			local dap = require('dap')
 			for _, lang in ipairs(vim.g.languages) do
-				for name, adapter in pairs(lang.debug_adapters) do
-					dap.adapters[name] = function(callback, config)
-
+				for name, adapter in pairs(lang.debug_adapters or {}) do
+					vim.print("added " .. name)
+					dap.adapters[name] = function(callback)
+						callback(adapter())
 					end
+					local name_to_filetypes = {}
+					name_to_filetypes[name] = lang.filetypes
+					require('dap.ext.vscode').load_launchjs(nil, name_to_filetypes)
 				end
 			end
 		end,

@@ -3,13 +3,13 @@
 --
 
 -- installed languages
-local languages = {
+vim.g.languages = {
   {
-    filetype = { 'cmake' },
+    filetypes = { 'cmake' },
     lsp_servers = { neocmake = {} },
   },
   {
-    filetype = { 'c', 'cpp' },
+    filetypes = { 'c', 'cpp' },
     lsp_servers = { clangd = {} },
     debug_adapters = {
       cpptools = function()
@@ -21,39 +21,39 @@ local languages = {
     },
   },
   {
-    filetype = { 'lua' },
+    filetypes = { 'lua' },
     lsp_servers = { lua_ls = {} },
   },
   {
-    filetype = { 'python' },
+    filetypes = { 'python' },
     lsp_servers = { pyright = {} },
     -- debug_adapters = { python = {} },
   },
   {
-    filetype = { 'bash' },
+    filetypes = { 'bash' },
     lsp_servers = { bashls = { filetypes = { 'sh', 'bash' } } },
     -- debug_adapters = { bash = {} },
   },
   {
-    filetype = { 'json' },
+    filetypes = { 'json' },
     lsp_servers = { jsonls = {} },
   },
   {
-    filetype = { 'perl' },
+    filetypes = { 'perl' },
     lsp_servers = { perlnavigator = {} },
     -- debug_adapters = { perl = {} }, -- NOT in mason-nvim-dap
   },
   {
-    filetype = { 'awk' },
+    filetypes = { 'awk' },
     lsp_servers = { awk_ls = {} },
   },
   {
-    filetype = { 'javascript', 'typescript' },
+    filetypes = { 'javascript', 'typescript' },
     lsp_servers = { tsserver = {} },
     -- debug_adapters = { js = {} },
   },
   {
-    filetype = { 'rust' },
+    filetypes = { 'rust' },
     lsp_servers = { rust_analyzer = {} },
     -- debug_adapters = { codelldb = {} },
   },
@@ -154,7 +154,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- set the treesitter languages and lsp server options
 local function combine_language_property(property)
   local result = {}
-  for _, language in ipairs(languages) do
+  for _, language in ipairs(vim.g.languages) do
     if language[property] == nil then goto continue end
     if vim.tbl_islist(language[property]) then
       for _, v in ipairs(language[property]) do
@@ -167,7 +167,7 @@ local function combine_language_property(property)
   end
   return result
 end
-vim.g.treesitter_ensure_installed = combine_language_property('filetype')
+vim.g.treesitter_ensure_installed = combine_language_property('filetypes')
 vim.g.lsp_servers = combine_language_property('lsp_servers')
 vim.g.debug_adapters = combine_language_property('debug_adapters')
 
