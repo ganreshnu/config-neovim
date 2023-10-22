@@ -13,9 +13,22 @@ vim.g.languages = {
     lsp_servers = { clangd = {} },
     debug_adapters = {
       cpptools = function()
+        -- see :h *dap-adapter*
         return {
+          id = 'cppdbg', -- the dap adapterID
           type = 'executable',
           command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
+        }
+      end,
+      codelldb = function()
+        return {
+          id = 'codelldb',
+          type = 'server',
+          port = "${port}",
+          executable = {
+            command = require('mason-core.path').bin_prefix('codelldb'),
+            args = { '--port', '${port}' },
+          }
         }
       end,
     },
