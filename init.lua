@@ -2,91 +2,11 @@
 -- my nvim conf
 --
 
--- installed languages
-vim.g.languages = {
-  {
-    filetypes = { 'cmake' },
-    lsp_servers = { neocmake = {} },
-  },
-  {
-    filetypes = { 'c', 'cpp' },
-    lsp_servers = { clangd = {} },
-    debug_adapters = {
-      ["cpptools"] = function()
-        -- see :h *dap-adapter*
-        return {
-          id = 'cppdbg', -- the dap adapterID
-          type = 'executable',
-          command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
-        }
-      end,
-      ["codelldb"] = function()
-        return {
-          type = 'server',
-          port = "${port}",
-          executable = {
-            command = require('mason-core.path').bin_prefix('codelldb'),
-            args = { '--port', '${port}' },
-          }
-        }
-      end,
-    },
-  },
-  {
-    filetypes = { 'lua' },
-    lsp_servers = { lua_ls = {} },
-  },
-  {
-    filetypes = { 'python' },
-    lsp_servers = { pyright = {} },
-    -- debug_adapters = { python = {} },
-  },
-  {
-    filetypes = { 'sh', 'bash' },
-    lsp_servers = { bashls = { filetypes = { 'sh', 'bash' } } },
-    debug_adapters = {
-      ["bash-debug-adapter"] = function()
-        return {
-          type = 'executable',
-          command = require('mason-core.path').bin_prefix('bash-debug-adapter'),
-          args = { 'start' },
-          options = {
-            env = { ["PATHBASHDB"] = require('mason-core.path').package_prefix('bash-debug-adapter') .. '/extension/bashdb_dir' }
-          },
-        }
-      end,
-    },
-  },
-  {
-    filetypes = { 'json' },
-    lsp_servers = { jsonls = {} },
-  },
-  {
-    filetypes = { 'perl' },
-    lsp_servers = { perlnavigator = {} },
-    -- debug_adapters = { perl = {} }, -- NOT in mason-nvim-dap
-  },
-  {
-    filetypes = { 'awk' },
-    lsp_servers = { awk_ls = {} },
-  },
-  {
-    filetypes = { 'javascript', 'typescript' },
-    lsp_servers = { tsserver = {} },
-    -- debug_adapters = { js = {} },
-  },
-  {
-    filetypes = { 'rust' },
-    lsp_servers = { rust_analyzer = {} },
-    -- debug_adapters = { codelldb = {} },
-  },
-}
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ','
+-- vim.g.maplocalleader = ','
 
 vim.g.netrw_banner = 0
 vim.g.netrw_browse_split = 4
@@ -158,6 +78,93 @@ vim.opt.errorbells = false
 -- Set completeopt to have a better completion experience
 vim.opt.completeopt = { 'menuone', 'longest' }
 
+--
+-- installed languages
+--
+local languages = {
+  {
+    filetypes = { 'cmake' },
+    lsp_servers = { neocmake = {} },
+  },
+  {
+    filetypes = { 'c', 'cpp' },
+    lsp_servers = { clangd = {} },
+    debug_adapters = {
+      ["cpptools"] = function()
+        -- see :h *dap-adapter*
+        return {
+          id = 'cppdbg', -- the dap adapterID
+          type = 'executable',
+          command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
+        }
+      end,
+      ["codelldb"] = function()
+        return {
+          type = 'server',
+          port = "${port}",
+          executable = {
+            command = require('mason-core.path').bin_prefix('codelldb'),
+            args = { '--port', '${port}' },
+          }
+        }
+      end,
+    },
+  },
+  {
+    filetypes = { 'lua' },
+    lsp_servers = { lua_ls = {} },
+  },
+  {
+    filetypes = { 'python' },
+    lsp_servers = { pyright = {} },
+    -- debug_adapters = { python = {} },
+  },
+  {
+    filetypes = { 'sh', 'bash' },
+    lsp_servers = { bashls = {} },
+    debug_adapters = {
+      ["bash-debug-adapter"] = function()
+        return {
+          type = 'executable',
+          command = require('mason-core.path').bin_prefix('bash-debug-adapter'),
+          args = { 'start' },
+          options = {
+            env = { ["PATHBASHDB"] = require('mason-core.path').package_prefix('bash-debug-adapter') .. '/extension/bashdb_dir' }
+          },
+        }
+      end,
+    },
+  },
+  {
+    filetypes = { 'json' },
+    lsp_servers = { jsonls = {} },
+  },
+  {
+    filetypes = { 'perl' },
+    lsp_servers = { perlnavigator = {} },
+    -- debug_adapters = { perl = {} }, -- NOT in mason-nvim-dap
+  },
+  {
+    filetypes = { 'awk' },
+    lsp_servers = { awk_ls = {} },
+  },
+  {
+    filetypes = { 'javascript', 'typescript' },
+    lsp_servers = { tsserver = {} },
+    -- debug_adapters = { js = {} },
+  },
+  {
+    filetypes = { 'rust' },
+    lsp_servers = { rust_analyzer = {} },
+    -- debug_adapters = { codelldb = {} },
+  },
+}
+
+-- set the languages to a global
+_G.languages = vim.tbl_map(function(lang)
+  local Language = { filetypes = {}, lsp_servers = {}, debug_adapters = {}, }
+  return setmetatable(lang, { __index = Language })
+end, languages)
 
 -- disable some default providers
 for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
@@ -174,26 +181,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
--- set the treesitter languages and lsp server options
-local function combine_language_property(property)
-  local result = {}
-  for _, language in ipairs(vim.g.languages) do
-    if language[property] == nil then goto continue end
-    if vim.tbl_islist(language[property]) then
-      for _, v in ipairs(language[property]) do
-        table.insert(result, v)
-      end
-    else
-      result = vim.tbl_extend("error", result, language[property])
-    end
-    ::continue::
-  end
-  return result
-end
-vim.g.treesitter_ensure_installed = combine_language_property('filetypes')
-vim.g.lsp_servers = combine_language_property('lsp_servers')
-vim.g.debug_adapters = combine_language_property('debug_adapters')
 
 -- setup our basic keymaps
 require("keymaps").basic()
@@ -220,6 +207,3 @@ require('lazy').setup('plugins')
 -- set the colorscheme
 -- vim.cmd('colorscheme base16-default-dark')
 vim.cmd('colorscheme base16-ia-dark')
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et

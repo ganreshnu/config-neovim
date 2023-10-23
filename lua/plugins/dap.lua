@@ -14,13 +14,11 @@ return {
 		config = function()
 			local dap = require('dap')
 			dap.set_log_level('TRACE')
-			for _, lang in ipairs(vim.g.languages) do
-				for name, adapter in pairs(lang.debug_adapters or {}) do
+			for _, lang in ipairs(languages) do
+				for name, adapter in pairs(lang.debug_adapters) do
 					-- see if adapter is installed
 					dap.adapters[name] = adapter()
-					local name_to_filetypes = {}
-					name_to_filetypes[name] = lang.filetypes
-					require('dap.ext.vscode').load_launchjs(nil, name_to_filetypes)
+					require('dap.ext.vscode').load_launchjs(nil, { [name] = lang.filetypes })
 				end
 			end
 		end,
