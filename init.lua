@@ -50,6 +50,9 @@ vim.g.languages = {
           type = 'executable',
           command = require('mason-core.path').bin_prefix('bash-debug-adapter'),
           args = { 'start' },
+          options = {
+            env = { ["PATHBASHDB"] = require('mason-core.path').package_prefix('bash-debug-adapter') .. '/extension/bashdb_dir' }
+          },
         }
       end,
     },
