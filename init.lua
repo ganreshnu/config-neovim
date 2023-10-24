@@ -157,10 +157,20 @@ local languages = {
 		filetypes = { 'json' },
 		lsp_servers = { jsonls = {} },
 	},
+	-- note: debugging perl requires installing PadWalker
+	--       $ cpan PadWalker
 	{
 		filetypes = { 'perl' },
 		lsp_servers = { perlnavigator = {} },
-		-- debug_adapters = { perl = {} }, -- NOT in mason-nvim-dap
+		debug_adapters = {
+			["perl-debug-adapter"] = function(callback, config)
+				callback({
+					type = 'executable',
+					command = require('mason-core.path').bin_prefix('perl-debug-adapter'),
+					args = {},
+				})
+			end,
+		},
 	},
 	{
 		filetypes = { 'awk' },

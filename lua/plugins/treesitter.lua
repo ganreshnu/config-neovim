@@ -21,13 +21,18 @@ return {
 		end,
 		opts = {
 			-- Add languages to be installed here that you want installed for treesitter
-			ensure_installed = vim.g.treesitter_ensure_installed,
-
-			highlight = { enable = true, use_languagetree = true, },
+			-- ensure_installed = vim.g.treesitter_ensure_installed,
+			auto_install = true,
+			highlight = { enable = true, },
 			indent = { enable = true },
 			incremental_selection = { enable = true },
 		},
 		config = function(_, opts)
+			opts.ensure_installed = {}
+			local available_parsers = require('nvim-treesitter.parsers').available_parsers()
+			for _, lang in ipairs(languages) do
+				-- if lang.filetypes 
+			end
 			vim.defer_fn(function()
 				require('nvim-treesitter.configs').setup(opts)
 			end, 0)
