@@ -15,7 +15,7 @@ return {
 			for _, lang in ipairs(languages) do
 				for name, adapter in pairs(lang.debug_adapters) do
 					-- see if adapter is installed
-					dap.adapters[name] = adapter()
+					dap.adapters[name] = adapter
 					-- dap.listeners.before.launch
 					require('dap.ext.vscode').load_launchjs(nil, { [name] = lang.filetypes })
 				end

@@ -83,6 +83,10 @@ vim.opt.completeopt = { 'menuone', 'longest' }
 --
 local languages = {
 	{
+		filetypes = { 'lua' },
+		lsp_servers = { lua_ls = {} },
+	},
+	{
 		filetypes = { 'cmake' },
 		lsp_servers = { neocmake = {} },
 	},
@@ -90,63 +94,62 @@ local languages = {
 		filetypes = { 'c', 'cpp' },
 		lsp_servers = { clangd = {} },
 		debug_adapters = {
-			["cpptools"] = function()
+			["cpptools"] = function(callback, config)
 				-- see :h *dap-adapter*
-				return {
+				callback({
 					id = 'cppdbg', -- the dap adapterID
 					type = 'executable',
 					command = require('mason-core.path').bin_prefix('OpenDebugAD7'),
-				}
+				})
 			end,
-			["codelldb"] = function()
-				return {
+			["codelldb"] = function(callback, config)
+				callback({
 					type = 'server',
 					port = "${port}",
 					executable = {
 						command = require('mason-core.path').bin_prefix('codelldb'),
 						args = { '--port', '${port}' },
 					}
-				}
+				})
 			end,
 		},
-	},
-	{
-		filetypes = { 'lua' },
-		lsp_servers = { lua_ls = {} },
 	},
 	{
 		filetypes = { 'python' },
 		lsp_servers = { pyright = {} },
 		debug_adapters = {
-			["debugpy"] = function()
-				return {
-
-				}
+			["debugpy"] = function(callback, config)
+				callback({
+					type = 'server',
+					port = '${port}',
+					executable = {
+						command = require('mason-core.path').bin_prefix('debugpy-adapter'),
+						args = { '--port', '${port}' },
+					}
+				})
 			end
 		},
-		-- debug_adapters = { python = {} },
 	},
 	{
 		filetypes = { 'sh', 'bash' },
 		lsp_servers = { bashls = {} },
 		debug_adapters = {
-			["bash-debug-adapter"] = function()
-				return {
+			["bash-debug-adapter"] = function(callback, config)
+				config.pathBashdbLib = require('mason-core.path').package_prefix('bash-debug-adapter') ..
+						'/extension/bashdb_dir'
+				config.pathBashdb = config.pathBashdbLib .. '/bashdb'
+				config.pathBash = 'bash'
+				config.pathCat = 'cat'
+				config.pathMkfifo = 'mkfifo'
+				config.pathPkill = 'pkill'
+				config.env = {}
+				config.args = {}
+
+				callback({
 					type = 'executable',
 					command = require('mason-core.path').bin_prefix('bash-debug-adapter'),
 					args = { 'start' },
-					enrich_config = function(config, on_config)
-						config.pathBashdbLib = require('mason-core.path').package_prefix('bash-debug-adapter') .. '/extension/bashdb_dir'
-						config.pathBashdb = config.pathBashdbLib .. '/bashdb'
-						config.pathBash = 'bash'
-						config.pathCat = 'cat'
-						config.pathMkfifo = 'mkfifo'
-						config.pathPkill = 'pkill'
-						config.env = {}
-						config.args = {}
-						on_config(config)
-					end,
-				}
+				})
 			end,
 		},
 	},
@@ -176,6 +179,7 @@ local languages = {
 }
 
 -- set the languages to a global
+-- note that metatables don't seem to work with vim.g
 _G.languages = vim.tbl_map(function(lang)
 	local Language = { filetypes = {}, lsp_servers = {}, debug_adapters = {}, }
 	return setmetatable(lang, { __index = Language })
