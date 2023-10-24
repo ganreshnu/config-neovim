@@ -5,8 +5,6 @@ return {
 	{
 		'mfussenegger/nvim-dap',
 		dependencies = {
-			-- Creates a beautiful debugger UI
-			'rcarriga/nvim-dap-ui',
 			-- Installs the debug adapters for you
 			-- 'jay-babu/mason-nvim-dap.nvim',
 			'williamboman/mason.nvim',
@@ -18,13 +16,18 @@ return {
 				for name, adapter in pairs(lang.debug_adapters) do
 					-- see if adapter is installed
 					dap.adapters[name] = adapter()
+					-- dap.listeners.before.launch
 					require('dap.ext.vscode').load_launchjs(nil, { [name] = lang.filetypes })
 				end
 			end
 		end,
 	},
 	{
+		-- Creates a beautiful debugger UI
 		'rcarriga/nvim-dap-ui',
+		dependencies = {
+			'mfussenegger/nvim-dap',
+		},
 		opts = {},
 		config = function(_, opts)
 			local dapui = require('dapui')
@@ -39,28 +42,4 @@ return {
 			require('keymaps').dap()
 		end,
 	},
-	--[[ {
-		'jay-babu/mason-nvim-dap.nvim',
-		cond = false,
-		dependencies = {
-			'williamboman/mason.nvim',
-		},
-		opts = {
-			-- You'll need to check that you have the required things installed
-			-- online, please don't ask me how to install them :)
-			ensure_installed = vim.tbl_keys(vim.g.debug_adapters),
-
-			-- You can provide additional configuration to the handlers,
-			-- see mason-nvim-dap README for more information
-			handlers = {
-				function(config)
-					require('mason-nvim-dap').default_setup(config)
-				end,
-				cppdbg = function(config)
-
-					require('mason-nvim-dap').default_setup(config)
-				end,
-			},
-		},
-	}, ]]
 }

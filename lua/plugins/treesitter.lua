@@ -12,10 +12,12 @@ return {
 		},
 		build = ':TSUpdate',
 		cond = function()
-			local compiler = vim.tbl_filter(function(exe)
-				return exe ~= vim.NIL
-			end, { vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" })
-			return vim.tbl_isempty(compiler)
+			for _, compiler in ipairs({ "cc", "gcc", "clang", "cl", "zig" }) do
+				if vim.fn.executable(compiler) == 1 then
+					return true
+				end
+			end
+			return false
 		end,
 		opts = {
 			-- Add languages to be installed here that you want installed for treesitter
