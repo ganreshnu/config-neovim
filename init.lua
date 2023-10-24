@@ -117,6 +117,13 @@ local languages = {
 	{
 		filetypes = { 'python' },
 		lsp_servers = { pyright = {} },
+		debug_adapters = {
+			["debugpy"] = function()
+				return {
+
+				}
+			end
+		},
 		-- debug_adapters = { python = {} },
 	},
 	{
