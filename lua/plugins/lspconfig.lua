@@ -37,7 +37,6 @@ return {
 						config.on_attach = on_attach
 						require('lspconfig')[name].setup(config)
 					elseif require('mason-dependencies').can_install(servername) then
-						vim.print('lsp install ' .. servername)
 						package:install()
 						installing = true
 					end

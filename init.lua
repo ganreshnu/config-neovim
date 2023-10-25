@@ -210,6 +210,20 @@ local languages = {
 				'tsserver',
 			}
 		},
+		debug_adapters = {
+			["js-debug-adapter"] = function(callback, config)
+				callback({
+					id = 'pwa-node',
+					type = 'server',
+					-- port = '${port}',
+					port = '8123',
+					executable = {
+						command = require('mason-core.path').bin_prefix('js-debug-adapter'),
+						-- args = { 'port=${port}', 'host=localhost' },
+					}
+				})
+			end
+		},
 		-- debug_adapters = { js = {} },
 	},
 	{

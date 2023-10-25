@@ -13,6 +13,7 @@ return {
 			local dap = require('dap')
 			dap.set_log_level('TRACE')
 
+			local installing = false
 			for _, lang in ipairs(languages) do
 				for name, adapter in pairs(lang.debug_adapters) do
 					-- see if adapter is installed
@@ -22,10 +23,14 @@ return {
 						-- dap.listeners.before.launch
 						require('dap.ext.vscode').load_launchjs(nil, { [name] = lang.filetypes })
 					elseif require('mason-dependencies').can_install(name) then
-						vim.print('dap install ' .. name)
 						package:install()
+						installing = true
 					end
 				end
+			end
+
+			if installing then
+				print("installing dap adapters. restart after")
 			end
 		end,
 	},

@@ -13,6 +13,7 @@ M.dependencies = {
 	['cpptools'] = { 'unzip' },
 	['bash-debug-adapter'] = { 'unzip' },
 	['perl-debug-adapter'] = { 'npm' },
+	['debugpy'] = { 'python3' },
 }
 
 M.can_install = function(name)
