@@ -29,7 +29,7 @@ return {
 			}
 			local can_install = function(name)
 				if not dependencies[name] then return true end
-				for _, dependency in dependencies do
+				for _, dependency in ipairs(dependencies[name]) do
 					if not vim.fn.executable(dependency) then
 						return false
 					end
