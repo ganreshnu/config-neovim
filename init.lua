@@ -87,6 +87,10 @@ local languages = {
 		lsp_servers = { lua_ls = {} },
 	},
 	{
+		filetypes = { 'json' },
+		lsp_servers = { jsonls = {} },
+	},
+	{
 		filetypes = { 'cmake' },
 		lsp_servers = { neocmake = {} },
 	},
@@ -153,12 +157,8 @@ local languages = {
 			end,
 		},
 	},
-	{
-		filetypes = { 'json' },
-		lsp_servers = { jsonls = {} },
-	},
 	-- note: debugging perl requires installing PadWalker
-	--       $ cpan PadWalker
+	-- $ cpan PadWalker
 	{
 		filetypes = { 'perl' },
 		lsp_servers = { perlnavigator = {} },

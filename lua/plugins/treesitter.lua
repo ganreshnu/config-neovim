@@ -21,18 +21,24 @@ return {
 		end,
 		opts = {
 			-- Add languages to be installed here that you want installed for treesitter
-			-- ensure_installed = vim.g.treesitter_ensure_installed,
+			ensure_installed = { 'comment' },
 			auto_install = true,
 			highlight = { enable = true, },
 			indent = { enable = true },
 			incremental_selection = { enable = true },
 		},
 		config = function(_, opts)
-			opts.ensure_installed = {}
+			-- check lsp/debug filetypes against available treesitter parsers
 			local available_parsers = require('nvim-treesitter.parsers').available_parsers()
 			for _, lang in ipairs(languages) do
-				-- if lang.filetypes 
+				local filetypes = vim.tbl_filter(function(filetype)
+					return vim.tbl_contains(available_parsers, filetype)
+				end, lang.filetypes)
+				for _, filetype in ipairs(filetypes) do
+					table.insert(opts.ensure_installed, filetype)
+				end
 			end
+
 			vim.defer_fn(function()
 				require('nvim-treesitter.configs').setup(opts)
 			end, 0)

@@ -23,10 +23,10 @@ return {
 			},
 			sources = {
 				-- { name = "nvim_lua" },
-				-- { name = "luasnip" },
+				{ name = "luasnip" },
 				{ name = "nvim_lsp" },
 				-- { name = "buffer" },
-				-- { name = "path" },
+				{ name = "path" },
 			},
 		},
 		config = function(_, opts)
