@@ -109,7 +109,10 @@ local languages = {
 	{
 		filetypes = { 'c', 'cpp' },
 		lsp_servers = {
-			['clangd'] = {}
+			-- clangd requires unzip
+			['clangd'] = {
+				'clangd',
+			}
 		},
 		debug_adapters = {
 			["cpptools"] = function(callback, config)
@@ -178,8 +181,8 @@ local languages = {
 		},
 	},
 	{
-	-- note: debugging perl requires installing PadWalker
-	-- $ cpan PadWalker
+		-- note: debugging perl requires installing PadWalker
+		-- $ cpan PadWalker
 		filetypes = { 'perl' },
 		lsp_servers = {
 			['perlnavigator'] = {}

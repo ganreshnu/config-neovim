@@ -24,6 +24,19 @@ return {
 				require("keymaps").lspconfig(bufnr)
 			end
 
+			local dependencies = {
+				['clangd'] = { 'unzip' }
+			}
+			local function can_install(name)
+				if not dependencies[name] then return true end
+				for _, dependency in dependencies do
+					if not vim.fn.executable(dependency) then
+						return false
+					end
+				end
+				return true
+			end
+
 			local installing = false
 			for _, language in ipairs(languages) do
 				for servername, config in pairs(language.lsp_servers) do
@@ -36,7 +49,7 @@ return {
 					if package:is_installed() then
 						config.on_attach = on_attach
 						require('lspconfig')[name].setup(config)
-					else
+					elseif can_install(servername) then
 						package:install()
 						installing = true
 					end
