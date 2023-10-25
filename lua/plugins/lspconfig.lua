@@ -25,12 +25,19 @@ return {
 			end
 
 			local dependencies = {
-				['clangd'] = { 'unzip' }
+				['clangd'] = { 'unzip' },
+				['bash-language-server'] = { 'npm' },
+				['json-lsp'] = { 'npm' },
+				['awk-language-server'] = { 'npm' },
+				['typescript-language-server'] = { 'npm' },
+				['pyright'] = { 'npm' },
+				['perlnavigator'] = { 'npm' },
+				['neomakelsp'] = { 'cargo' },
 			}
 			local can_install = function(name)
 				if not dependencies[name] then return true end
 				for _, dependency in ipairs(dependencies[name]) do
-					if not vim.fn.executable(dependency) then
+					if vim.fn.executable(dependency) == 0 then
 						return false
 					end
 				end
