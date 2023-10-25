@@ -9,6 +9,9 @@ M.dependencies = {
 	['pyright'] = { 'npm' },
 	['perlnavigator'] = { 'npm' },
 	['neocmakelsp'] = { 'cargo' },
+	['codelldb'] = { 'unzip' },
+	['cpptools'] = { 'unzip' },
+	['bash-debug-adapter'] = { 'unzip' },
 }
 
 M.can_install = function(name)
