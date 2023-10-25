@@ -84,19 +84,33 @@ vim.opt.completeopt = { 'menuone', 'longest' }
 local languages = {
 	{
 		filetypes = { 'lua' },
-		lsp_servers = { lua_ls = {} },
+		lsp_servers = {
+			['lua-language-server'] = {
+				'lua_ls',
+			}
+		},
 	},
 	{
 		filetypes = { 'json' },
-		lsp_servers = { jsonls = {} },
+		lsp_servers = {
+			['json-lsp'] = {
+				'jsonls',
+			}
+		},
 	},
 	{
 		filetypes = { 'cmake' },
-		lsp_servers = { neocmake = {} },
+		lsp_servers = {
+			['neocmakelsp'] = {
+				'neocmake',
+			}
+		},
 	},
 	{
 		filetypes = { 'c', 'cpp' },
-		lsp_servers = { clangd = {} },
+		lsp_servers = {
+			['clangd'] = {}
+		},
 		debug_adapters = {
 			["cpptools"] = function(callback, config)
 				-- see :h *dap-adapter*
@@ -120,7 +134,9 @@ local languages = {
 	},
 	{
 		filetypes = { 'python' },
-		lsp_servers = { pyright = {} },
+		lsp_servers = {
+			['pyright'] = {}
+		},
 		debug_adapters = {
 			["debugpy"] = function(callback, config)
 				callback({
@@ -136,7 +152,11 @@ local languages = {
 	},
 	{
 		filetypes = { 'sh', 'bash' },
-		lsp_servers = { bashls = {} },
+		lsp_servers = {
+			['bash-language-server'] = {
+				'bashls',
+			}
+		},
 		debug_adapters = {
 			["bash-debug-adapter"] = function(callback, config)
 				config.pathBashdbLib = require('mason-core.path').package_prefix('bash-debug-adapter') ..
@@ -157,11 +177,13 @@ local languages = {
 			end,
 		},
 	},
+	{
 	-- note: debugging perl requires installing PadWalker
 	-- $ cpan PadWalker
-	{
 		filetypes = { 'perl' },
-		lsp_servers = { perlnavigator = {} },
+		lsp_servers = {
+			['perlnavigator'] = {}
+		},
 		debug_adapters = {
 			["perl-debug-adapter"] = function(callback, config)
 				callback({
@@ -174,16 +196,28 @@ local languages = {
 	},
 	{
 		filetypes = { 'awk' },
-		lsp_servers = { awk_ls = {} },
+		lsp_servers = {
+			['awk-language-server'] = {
+				'awk_ls',
+			}
+		},
 	},
 	{
 		filetypes = { 'javascript', 'typescript' },
-		lsp_servers = { tsserver = {} },
+		lsp_servers = {
+			['typescript-language-server'] = {
+				'tsserver',
+			}
+		},
 		-- debug_adapters = { js = {} },
 	},
 	{
 		filetypes = { 'rust' },
-		lsp_servers = { rust_analyzer = {} },
+		lsp_servers = {
+			['rust-analyzer'] = {
+				'rust_analyzer'
+			}
+		},
 		-- debug_adapters = { codelldb = {} },
 	},
 }

@@ -6,15 +6,6 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			-- Manage LSPs in stdpath
-			{
-				'williamboman/mason-lspconfig.nvim',
-				dependencies = { 'williamboman/mason.nvim' },
-				opts = {
-					ensure_installed = { 'lua_ls' },
-				},
-			},
-
 			-- Useful status updates for LSP
 			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 			{ 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
@@ -29,26 +20,32 @@ return {
 
 			-- run when the buffer is attached
 			local on_attach = function(_, bufnr)
+				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 				require("keymaps").lspconfig(bufnr)
 			end
 
-			-- setup the configuration handlers
-			require("mason-lspconfig").setup_handlers {
-				function(server_name)
-					local lang = vim.tbl_filter(function(obj)
-						return obj.lsp_servers[server_name] ~= nil
-					end, languages)[1] or {}
-					require("lspconfig")[server_name].setup {
-						capabilities = capabilities,
-						on_attach = on_attach,
-						settings = (lang.lsp_servers or {})[server_name],
-						filetypes = lang.filetypes,
-					}
-				end,
-				--[[ ["rust_analyzer"] = function()
-					require("rust-tools").setup{}
-				end ]]
-			}
+			local installing = false
+			for _, language in ipairs(languages) do
+				for servername, config in pairs(language.lsp_servers) do
+					-- get the lspconfig name
+					local name = config[1] or servername
+					table.remove(config, 1)
+
+					-- check if server is installed
+					local package = require('mason-registry').get_package(servername)
+					if package:is_installed() then
+						config.on_attach = on_attach
+						require('lspconfig')[name].setup(config)
+					else
+						package:install()
+						installing = true
+					end
+				end
+			end
+
+			if installing then
+				print("installing lsp servers. restart after")
+			end
 		end,
 	},
 }
