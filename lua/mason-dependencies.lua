@@ -12,6 +12,7 @@ M.dependencies = {
 	['codelldb'] = { 'unzip' },
 	['cpptools'] = { 'unzip' },
 	['bash-debug-adapter'] = { 'unzip' },
+	['perl-debug-adapter'] = { 'npm' },
 }
 
 M.can_install = function(name)

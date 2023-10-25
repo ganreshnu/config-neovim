@@ -110,9 +110,7 @@ local languages = {
 		filetypes = { 'c', 'cpp' },
 		lsp_servers = {
 			-- clangd requires unzip
-			['clangd'] = {
-				'clangd',
-			}
+			['clangd'] = {}
 		},
 		debug_adapters = {
 			["cpptools"] = function(callback, config)

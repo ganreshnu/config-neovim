@@ -22,6 +22,7 @@ return {
 						-- dap.listeners.before.launch
 						require('dap.ext.vscode').load_launchjs(nil, { [name] = lang.filetypes })
 					elseif require('mason-dependencies').can_install(name) then
+						vim.print('dap install ' .. name)
 						package:install()
 					end
 				end
