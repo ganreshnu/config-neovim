@@ -14,6 +14,7 @@ return {
 			'hrsh7th/nvim-cmp'
 		},
 		config = function()
+			-- vim.lsp.set_log_level("TRACE")
 			-- setup the client capabilities
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -34,6 +35,7 @@ return {
 					-- check if server is installed
 					local package = require('mason-registry').get_package(servername)
 					if package:is_installed() then
+						config.capabilities = capabilities
 						config.on_attach = on_attach
 						require('lspconfig')[name].setup(config)
 					elseif require('mason-dependencies').can_install(servername) then

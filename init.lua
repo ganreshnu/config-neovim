@@ -183,7 +183,9 @@ local languages = {
 		-- $ cpan PadWalker
 		filetypes = { 'perl' },
 		lsp_servers = {
-			['perlnavigator'] = {}
+			['perlnavigator'] = {
+				cmd = { 'perlnavigator', '--stdio' }
+			}
 		},
 		debug_adapters = {
 			["perl-debug-adapter"] = function(callback, config)
