@@ -27,7 +27,7 @@ return {
 			local dependencies = {
 				['clangd'] = { 'unzip' }
 			}
-			local function can_install(name)
+			local can_install = function(name)
 				if not dependencies[name] then return true end
 				for _, dependency in dependencies do
 					if not vim.fn.executable(dependency) then
