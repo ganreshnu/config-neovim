@@ -24,26 +24,6 @@ return {
 				require("keymaps").lspconfig(bufnr)
 			end
 
-			local dependencies = {
-				['clangd'] = { 'unzip' },
-				['bash-language-server'] = { 'npm' },
-				['json-lsp'] = { 'npm' },
-				['awk-language-server'] = { 'npm' },
-				['typescript-language-server'] = { 'npm' },
-				['pyright'] = { 'npm' },
-				['perlnavigator'] = { 'npm' },
-				['neomakelsp'] = { 'cargo' },
-			}
-			local can_install = function(name)
-				if not dependencies[name] then return true end
-				for _, dependency in ipairs(dependencies[name]) do
-					if vim.fn.executable(dependency) == 0 then
-						return false
-					end
-				end
-				return true
-			end
-
 			local installing = false
 			for _, language in ipairs(languages) do
 				for servername, config in pairs(language.lsp_servers) do
@@ -56,7 +36,7 @@ return {
 					if package:is_installed() then
 						config.on_attach = on_attach
 						require('lspconfig')[name].setup(config)
-					elseif can_install(servername) then
+					elseif require('mason-dependencies').can_install(servername) then
 						package:install()
 						installing = true
 					end
