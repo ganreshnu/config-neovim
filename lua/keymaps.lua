@@ -94,6 +94,7 @@ M.cmp = function()
 				fallback()
 			end
 		end, { 'i', 's' }),
+		-- FIXME: tab is not working
 		--[[ ['<S-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.mapping.close()

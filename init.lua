@@ -235,14 +235,25 @@ local languages = {
 				'rust_analyzer'
 			}
 		},
-		-- debug_adapters = { codelldb = {} },
+		debug_adapters = {
+			["codelldb"] = function(callback, config)
+				callback({
+					type = 'server',
+					port = "${port}",
+					executable = {
+						command = require('mason-core.path').bin_prefix('codelldb'),
+						args = { '--port', '${port}' },
+					}
+				})
+			end,
+		}
 	},
 }
 
 -- set the languages to a global
 -- note that metatables don't seem to work with vim.g
+local Language = { filetypes = {}, lsp_servers = {}, debug_adapters = {}, }
 _G.languages = vim.tbl_map(function(lang)
-	local Language = { filetypes = {}, lsp_servers = {}, debug_adapters = {}, }
 	return setmetatable(lang, { __index = Language })
 end, languages)
 
