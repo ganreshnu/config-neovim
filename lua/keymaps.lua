@@ -1,6 +1,6 @@
 local M = {}
 
--- 
+--
 -- basic keybindings
 --
 M.basic = function()
@@ -31,7 +31,7 @@ M.basic = function()
 	vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 end
 
--- 
+--
 -- telescope keybindings
 --
 M.telescope = function()
@@ -46,7 +46,7 @@ M.telescope = function()
 	vim.keymap.set('n', "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "buffer [f]ind fu[z]zy" })
 end
 
--- 
+--
 -- lsp keybindings
 --
 M.lspconfig = function(bufnr)
@@ -58,10 +58,15 @@ M.lspconfig = function(bufnr)
 	nmap("gD", vim.lsp.buf.declaration, "goto declaration")
 	nmap("gd", vim.lsp.buf.definition, "goto definition")
 	nmap("gi", vim.lsp.buf.implementation, "goto implementation")
-	nmap("<leader>F", vim.lsp.buf.format, "format buffer")
+	nmap("<C-k>", vim.lsp.buf.signature_help, "signature help")
+	nmap("<leader>D", vim.lsp.buf.type_definition, "type definition")
+	nmap("<leader>rn", vim.lsp.buf.rename, "rename")
+	vim.keymap.set({ 'n', 'v' }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "code action" })
+	nmap("gr", vim.lsp.buf.references, "goto references")
+	nmap("<leader>F", function() vim.lsp.buf.format { async = true } end, "format buffer")
 end
 
--- 
+--
 -- autocomplete keybindings
 --
 M.cmp = function()
@@ -102,7 +107,17 @@ M.cmp = function()
 end
 
 M.dap = function()
+	local dap = require('dap')
 
+	vim.keymap.set('n', '<F5>', dap.continue, { desc = "continue" })
+	vim.keymap.set('n', '<F10>', dap.step_over, { desc = "step over" })
+	vim.keymap.set('n', '<F11>', dap.step_into, { desc = "step into" })
+	vim.keymap.set('n', '<F12>', dap.step_out, { desc = "step out" })
+	vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = "toggle breakpoint" })
+	vim.keymap.set('n', '<leader>B', dap.set_breakpoint, { desc = "set breakpoint" })
+	vim.keymap.set('n', '<leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, { desc = "set logpoint" })
+	vim.keymap.set('n', '<leader>dr', dap.repl.open, { desc = "open REPL" })
+	vim.keymap.set('n', '<leader>dl', dap.run_last, { desc = "run last" })
 end
 
 return M
