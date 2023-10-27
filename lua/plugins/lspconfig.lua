@@ -37,6 +37,7 @@ return {
 					if package:is_installed() then
 						config.capabilities = capabilities
 						config.on_attach = on_attach
+						config.filetypes = language.filetypes
 						require('lspconfig')[name].setup(config)
 					elseif require('mason-dependencies').can_install(servername) then
 						package:install()
