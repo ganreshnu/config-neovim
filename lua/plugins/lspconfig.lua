@@ -25,7 +25,6 @@ return {
 				require("keymaps").lspconfig(bufnr)
 			end
 
-			local installing = false
 			for _, language in ipairs(languages) do
 				for servername, config in pairs(language.lsp_servers) do
 					-- get the lspconfig name
@@ -36,18 +35,11 @@ return {
 					local package = require('mason-registry').get_package(servername)
 					if package:is_installed() then
 						config.capabilities = capabilities
-						config.on_attach = on_attach
 						config.filetypes = language.filetypes
+						config.on_attach = on_attach
 						require('lspconfig')[name].setup(config)
-					elseif require('mason-dependencies').can_install(servername) then
-						package:install()
-						installing = true
 					end
 				end
-			end
-
-			if installing then
-				print("installing lsp servers. restart after")
 			end
 		end,
 	},

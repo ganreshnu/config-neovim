@@ -226,7 +226,6 @@ local languages = {
 				})
 			end
 		},
-		-- debug_adapters = { js = {} },
 	},
 	{
 		filetypes = { 'rust' },
