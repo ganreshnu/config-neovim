@@ -11,7 +11,7 @@ return {
 		},
 		config = function()
 			local dap = require('dap')
-			dap.set_log_level('TRACE')
+			-- dap.set_log_level('TRACE')
 
 			for _, lang in ipairs(languages) do
 				for name, adapter in pairs(lang.debug_adapters) do
@@ -19,7 +19,6 @@ return {
 					local package = require('mason-registry').get_package(name)
 					if package:is_installed() then
 						dap.adapters[name] = adapter
-						-- dap.listeners.before.launch
 						require('dap.ext.vscode').load_launchjs(nil, { [name] = lang.filetypes })
 					end
 				end

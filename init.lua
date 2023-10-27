@@ -217,11 +217,10 @@ local languages = {
 				callback({
 					id = 'pwa-node',
 					type = 'server',
-					-- port = '${port}',
-					port = '8123',
+					port = '${port}',
 					executable = {
 						command = require('mason-core.path').bin_prefix('js-debug-adapter'),
-						-- args = { 'port=${port}', 'host=localhost' },
+						args = { "${port}", },
 					}
 				})
 			end

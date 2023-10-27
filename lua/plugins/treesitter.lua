@@ -22,6 +22,7 @@ return {
 		opts = {
 			-- Add languages to be installed here that you want installed for treesitter
 			ensure_installed = { 'comment' },
+			-- autoinstall doesn't seem to work
 			auto_install = true,
 			highlight = { enable = true, },
 			indent = { enable = true },
@@ -34,9 +35,7 @@ return {
 				local filetypes = vim.tbl_filter(function(filetype)
 					return vim.tbl_contains(available_parsers, filetype)
 				end, lang.filetypes)
-				for _, filetype in ipairs(filetypes) do
-					table.insert(opts.ensure_installed, filetype)
-				end
+				vim.list_extend(opts.ensure_installed, filetypes)
 			end
 
 			vim.defer_fn(function()
