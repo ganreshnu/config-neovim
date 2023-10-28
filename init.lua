@@ -89,6 +89,7 @@ local languages = {
 				'lua_ls',
 			}
 		},
+		formatters = { "stylua" },
 	},
 	{
 		filetypes = { 'json' },
@@ -112,6 +113,7 @@ local languages = {
 			-- clangd requires unzip
 			['clangd'] = {}
 		},
+		formatters = { 'clang-format' },
 		debug_adapters = {
 			["cpptools"] = function(callback, config)
 				-- see :h *dap-adapter*
@@ -212,6 +214,9 @@ local languages = {
 				'tsserver',
 			}
 		},
+		formatters = {
+			{ "prettierd", "prettier" }
+		},
 		debug_adapters = {
 			["js-debug-adapter"] = function(callback, config)
 				callback({
@@ -250,7 +255,7 @@ local languages = {
 
 -- set the languages to a global
 -- note that metatables don't seem to work with vim.g
-local Language = { filetypes = {}, lsp_servers = {}, debug_adapters = {}, }
+local Language = { filetypes = {}, lsp_servers = {}, formatters = {}, debug_adapters = {}, }
 _G.languages = vim.tbl_map(function(lang)
 	return setmetatable(lang, { __index = Language })
 end, languages)
