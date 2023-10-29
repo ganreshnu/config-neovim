@@ -113,6 +113,7 @@ local languages = {
 			-- clangd requires unzip
 			["clangd"] = {},
 		},
+		linters = { "clang_tidy" },
 		debug_adapters = {
 			["cpptools"] = function(callback, config)
 				-- see :h *dap-adapter*
@@ -160,10 +161,11 @@ local languages = {
 			},
 		},
 		formatters = { "shfmt" },
+		linters = { "shellcheck" },
 		debug_adapters = {
 			["bash-debug-adapter"] = function(callback, config)
 				config.pathBashdbLib = require("mason-core.path").package_prefix("bash-debug-adapter")
-					.. "/extension/bashdb_dir"
+						.. "/extension/bashdb_dir"
 				config.pathBashdb = config.pathBashdbLib .. "/bashdb"
 				config.pathBash = "bash"
 				config.pathCat = "cat"
@@ -214,7 +216,7 @@ local languages = {
 				"tsserver",
 			},
 		},
-		formatters = { "prettierd" },
+		formatters = { "prettier" },
 		debug_adapters = {
 			["js-debug-adapter"] = function(callback, config)
 				callback({
@@ -253,7 +255,7 @@ local languages = {
 
 -- set the languages to a global
 -- note that metatables don't seem to work with vim.g
-local Language = { filetypes = {}, lsp_servers = {}, formatters = {}, debug_adapters = {} }
+local Language = { filetypes = {}, lsp_servers = {}, formatters = {}, linters = {}, debug_adapters = {} }
 _G.languages = vim.tbl_map(function(lang)
 	return setmetatable(lang, { __index = Language })
 end, languages)

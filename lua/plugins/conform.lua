@@ -1,6 +1,7 @@
 return {
 	{
 		"stevearc/conform.nvim",
+		cond = false,
 		opts = {
 			log_level = vim.log.levels.ERROR,
 			notify_on_error = true,
