@@ -111,9 +111,11 @@ local languages = {
 		filetypes = { "c", "cpp" },
 		lsp_servers = {
 			-- clangd requires unzip
-			["clangd"] = {},
+			["clangd"] = {
+				cmd = { "clangd", "--offset-encoding=utf-16" },
+			},
 		},
-		linters = { "clang_tidy" },
+		-- linters = { "clang_tidy" },
 		debug_adapters = {
 			["cpptools"] = function(callback, config)
 				-- see :h *dap-adapter*
@@ -159,13 +161,14 @@ local languages = {
 			["bash-language-server"] = {
 				"bashls",
 			},
+			["shfmt"] = {}
 		},
-		formatters = { "shfmt" },
-		linters = { "shellcheck" },
+		-- formatters = { "shfmt" },
+		-- linters = { "shellcheck" },
 		debug_adapters = {
 			["bash-debug-adapter"] = function(callback, config)
 				config.pathBashdbLib = require("mason-core.path").package_prefix("bash-debug-adapter")
-						.. "/extension/bashdb_dir"
+					.. "/extension/bashdb_dir"
 				config.pathBashdb = config.pathBashdbLib .. "/bashdb"
 				config.pathBash = "bash"
 				config.pathCat = "cat"
