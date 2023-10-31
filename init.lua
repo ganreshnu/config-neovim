@@ -89,7 +89,6 @@ local languages = {
 				"lua_ls",
 			},
 		},
-		formatters = { "stylua" },
 	},
 	{
 		filetypes = { "json" },
@@ -115,7 +114,6 @@ local languages = {
 				cmd = { "clangd", "--offset-encoding=utf-16" },
 			},
 		},
-		-- linters = { "clang_tidy" },
 		debug_adapters = {
 			["cpptools"] = function(callback, config)
 				-- see :h *dap-adapter*
@@ -161,14 +159,12 @@ local languages = {
 			["bash-language-server"] = {
 				"bashls",
 			},
-			["shfmt"] = {}
+			["shfmt"] = {},
 		},
-		-- formatters = { "shfmt" },
-		-- linters = { "shellcheck" },
 		debug_adapters = {
 			["bash-debug-adapter"] = function(callback, config)
 				config.pathBashdbLib = require("mason-core.path").package_prefix("bash-debug-adapter")
-					.. "/extension/bashdb_dir"
+						.. "/extension/bashdb_dir"
 				config.pathBashdb = config.pathBashdbLib .. "/bashdb"
 				config.pathBash = "bash"
 				config.pathCat = "cat"
@@ -219,9 +215,8 @@ local languages = {
 				"tsserver",
 			},
 		},
-		formatters = { "prettier" },
 		debug_adapters = {
-			["js-debug-adapter"] = function(callback, config)
+			["pwa-node"] = function(callback, config)
 				callback({
 					id = "pwa-node",
 					type = "server",
