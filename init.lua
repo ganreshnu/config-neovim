@@ -216,7 +216,7 @@ local languages = {
 			},
 		},
 		debug_adapters = {
-			["pwa-node"] = function(callback, config)
+			["js-debug-adapter"] = function(callback, config)
 				callback({
 					id = "pwa-node",
 					type = "server",
@@ -253,7 +253,7 @@ local languages = {
 
 -- set the languages to a global
 -- note that metatables don't seem to work with vim.g
-local Language = { filetypes = {}, lsp_servers = {}, formatters = {}, linters = {}, debug_adapters = {} }
+local Language = { filetypes = {}, lsp_servers = {}, debug_adapters = {} }
 _G.languages = vim.tbl_map(function(lang)
 	return setmetatable(lang, { __index = Language })
 end, languages)
