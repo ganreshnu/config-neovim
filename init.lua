@@ -24,7 +24,7 @@ vim.opt.ruler = true
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 vim.opt.cursorline = true
 
 -- Set tabstop to something reasonable
@@ -55,7 +55,7 @@ vim.opt.signcolumn = "number"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 -- NOTE: You should make sure your terminal supports this
-vim.opt.termguicolors = true
+vim.opt.termguicolors = false
 -- Enable break indent
 vim.opt.breakindent = true
 vim.opt.smartindent = true
@@ -249,6 +249,14 @@ local languages = {
 			end,
 		},
 	},
+	{
+		filetypes = { "toml" },
+		lsp_servers = {
+			["taplo"] = {
+				"taplo"
+			},
+		}
+	}
 }
 
 -- set the languages to a global
@@ -297,5 +305,5 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 -- set the colorscheme
--- vim.cmd('colorscheme base16-default-dark')
-vim.cmd("colorscheme base16-ia-dark")
+vim.cmd('colorscheme ansi')
+

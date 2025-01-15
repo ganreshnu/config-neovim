@@ -1,5 +1,5 @@
 return {
 	{
-		'RRethy/nvim-base16',
-	}
+		'jeffkreeftmeijer/vim-dim',
+	},
 }
