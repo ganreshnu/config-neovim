@@ -256,6 +256,14 @@ local languages = {
 				"taplo"
 			},
 		}
+	},
+	{
+		filetypes = { "ts" },
+		lsp_servers = {
+			["typescript-language-server"] = {
+				"ts_ls"
+			},
+		}
 	}
 }
 
