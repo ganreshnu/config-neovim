@@ -24,7 +24,7 @@ vim.opt.ruler = true
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
--- vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 vim.opt.cursorline = true
 
 -- Set tabstop to something reasonable
