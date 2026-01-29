@@ -170,6 +170,7 @@ local languages = {
 				-- args = { "start" },
 			},
 		},
+		grammars = { 'bash' }
 	},
 	{
 		"JSON",
@@ -181,6 +182,7 @@ local languages = {
 				settings = {},
 			},
 		},
+		grammars = { 'json' }
 	},
 	{
 		"CMake",
@@ -191,6 +193,7 @@ local languages = {
 				cmd = { "neocmakelsp", "stdio" },
 			},
 		},
+		grammars = { 'cmake' }
 	},
 	{
 		"C and C++",
@@ -210,6 +213,7 @@ local languages = {
 				args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
 			},
 		},
+		grammars = { 'c', 'cpp' }
 	},
 	{
 		"Python",
@@ -230,6 +234,7 @@ local languages = {
 				settings = {},
 			},
 		},
+		grammars = { 'python' },
 	},
 	{
 		"TOML",
@@ -241,6 +246,7 @@ local languages = {
 				root_markers = { 'tombi.toml', 'pyproject.toml', '.git' },
 			},
 		},
+		grammars = { 'toml' }
 	},
 	{
 		"Markdown",
@@ -252,6 +258,7 @@ local languages = {
 				root_markers = { '.marksman.toml', '.git' },
 			},
 		},
+		grammars = { 'markdown' }
 	},
 }
 
@@ -306,6 +313,7 @@ for _, language in ipairs(languages) do
 
 		::continue::
 	end
+		require('nvim-treesitter').install(language.grammars)
 end
 
 -- disable some default providers
