@@ -208,7 +208,7 @@ local languages = {
 		},
 		debug_adapters = {
 			{
-				'gdb',
+				id = 'gdb',
 				type = 'executable',
 				command = 'gdb',
 				args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
@@ -296,24 +296,27 @@ for _, language in ipairs(languages) do
 	for _, server in ipairs(language.lsp_servers) do
 		local mason_name = server[1]
 		table.remove(server, 1)
-		if not require('mason-registry').is_installed(mason_name) then goto continue end
+		if not require('mason-registry').is_installed(mason_name) then
+			vim.cmd("MasonInstall "..mason_name)
+		end
 
 		server.cmd = server.cmd or { mason_name }
 		server.filetypes = language.filetypes
 		vim.lsp.config(mason_name, server)
 		vim.lsp.enable(mason_name)
-
-		::continue::
 	end
 	for _, adapter in ipairs(language.debug_adapters) do
 		local mason_name = adapter[1]
-		table.remove(adapter, 1)
-		if not (require('mason-registry').is_installed(mason_name) or vim.fn.executable(mason_name) == 1) then goto continue end
-
+		if mason_name ~= nil then
+			table.remove(adapter, 1)
+			if not require('mason-registry').is_installed(mason_name) then
+				vim.cmd("MasonInstall "..mason_name)
+			end
+		end
 		adapter.command = adapter.command or mason_name
-		require('dap').adapters[adapter.id or mason_name] = adapter
-
-		::continue::
+		if vim.fn.executable(adapter.command) then
+			require('dap').adapters[adapter.id or mason_name] = adapter
+		end
 	end
 	require('nvim-treesitter').install(language.grammars)
 end
