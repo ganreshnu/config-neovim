@@ -313,7 +313,7 @@ for _, language in ipairs(languages) do
 
 		::continue::
 	end
-		require('nvim-treesitter').install(language.grammars)
+	require('nvim-treesitter').install(language.grammars)
 end
 
 -- disable some default providers
