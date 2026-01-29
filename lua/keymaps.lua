@@ -4,6 +4,7 @@ local M = {}
 -- basic keybindings
 --
 M.basic = function()
+	local wk = require('which-key')
 	-- [[ Basic Keymaps ]]
 
 	-- Keymaps for better default experience
@@ -26,6 +27,7 @@ M.basic = function()
 	vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 	vim.keymap.set('n', '<leader>l', vim.diagnostic.setloclist, { desc = 'Open file diagnostics' })
 	vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist, { desc = 'Open all diagnostics' })
+	wk.add({ '<leader>x', group = "terminal" })
 	vim.keymap.set('n', '<leader>xs', function() vim.cmd(":split term://bash") vim.cmd("startinsert") end, { desc = 'Open terminal split' })
 	vim.keymap.set('n', '<leader>xv', function() vim.cmd(":vsplit term://bash") vim.cmd("startinsert") end, { desc = 'Open terminal vertical' })
 end
