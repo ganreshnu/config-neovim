@@ -2,7 +2,7 @@
 
 _My personal neovim configuration._
 
-![splash](assets/readme/splash.png)
+![splash](assets/splash.png)
 
 ---
 
