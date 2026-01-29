@@ -115,7 +115,6 @@ local languages = {
 	{
 		"Lua",
 		filetypes = { "lua" },
-		grammars = { "lua", "luadoc" },
 		lsp_servers = {
 			{
 				"lua-language-server",
@@ -140,6 +139,8 @@ local languages = {
 				args = { 'local-lua-debugger-vscode/extension/debugAdapter.js' },
 			},
 		},
+		-- the 'lua' grammar is installed by neovim
+		grammars = { "luadoc" },
 	},
 	{
 		"Shell Script",
@@ -213,7 +214,8 @@ local languages = {
 				args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
 			},
 		},
-		grammars = { 'c', 'cpp' }
+		-- the 'c' grammar is installed by neovim
+		grammars = { 'cpp' }
 	},
 	{
 		"Python",
@@ -258,7 +260,7 @@ local languages = {
 				root_markers = { '.marksman.toml', '.git' },
 			},
 		},
-		grammars = { 'markdown' }
+		-- the grammar 'markdown' is installed by neovim
 	},
 }
 
