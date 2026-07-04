@@ -152,4 +152,28 @@ return {
 		},
 		-- the grammar 'markdown' is installed by neovim
 	},
+	{
+		"Docker",
+		filetypes = { 'dockerfile' },
+		lsp_servers = {
+			{
+				'dockerfile-language-server',
+				cmd = { 'docker-langserver', '--stdio' },
+				root_markers = { '.git' },
+			},
+		},
+		grammars = { 'dockerfile' }
+	},
+	{
+		"Rust",
+		filetypes = { 'rust' },
+		lsp_servers = {
+			{
+				'rust-analyzer',
+				cmd = { 'rust-analyzer' },
+				root_markers = { 'Cargo.toml', '.git' },
+			}
+		},
+		grammars = { 'rust' }
+	},
 }

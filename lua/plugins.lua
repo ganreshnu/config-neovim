@@ -79,12 +79,32 @@ return {
 			keymaps['fzf-lua']()
 		end
 	},
-	{
-		"christoomey/vim-tmux-navigator",
-	},
+	-- {
+	-- 	"christoomey/vim-tmux-navigator",
+	-- },
 	{
 		'nvim-mini/mini.ai',
 		version = '*',
 		opts = {},
+	},
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		opts = {
+			interactions = {
+				chat = {
+					adapter = {
+						name = "ollama",
+						model = "qwen3-coder:30b"
+					},
+				},
+			},
+		},
+		config = function(_, opts)
+			require('codecompanion').setup(opts)
+			keymaps.CodeCompanion()
+		end,
 	},
 }

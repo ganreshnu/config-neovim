@@ -184,6 +184,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+require("floaterminal")
 -- setup our basic keymaps
 require("keymaps").basic()
 

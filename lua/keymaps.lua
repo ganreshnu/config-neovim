@@ -30,6 +30,21 @@ M.basic = function()
 	wk.add({ '<leader>x', group = "terminal" })
 	vim.keymap.set('n', '<leader>xs', function() vim.cmd(":split term://bash") vim.cmd("startinsert") end, { desc = 'Open terminal split' })
 	vim.keymap.set('n', '<leader>xv', function() vim.cmd(":vsplit term://bash") vim.cmd("startinsert") end, { desc = 'Open terminal vertical' })
+
+	local function smart_move(direction, tmux_arg)
+		local curwin = vim.api.nvim_get_current_win()
+		vim.cmd('wincmd ' .. direction)
+		if curwin == vim.api.nvim_get_current_win() then
+			vim.fn.system('tmux select-pane ' .. tmux_arg)
+		end
+	end
+	vim.keymap.set('n', '<M-h>', function() smart_move('h', '-L') end, { silent = true })
+	vim.keymap.set('n', '<M-j>', function() smart_move('j', '-D') end, { silent = true })
+	vim.keymap.set('n', '<M-k>', function() smart_move('k', '-U') end, { silent = true })
+	vim.keymap.set('n', '<M-l>', function() smart_move('l', '-R') end, { silent = true })
+
+	vim.keymap.set('t', '<esc><esc>', "<c-\\><c-n>")
+	vim.keymap.set('n', '<leader>r', '<cmd>FloaTerminal<CR>')
 end
 
 --
@@ -76,6 +91,15 @@ M.dap = function()
 	vim.keymap.set('n', '<Leader>ds', function()
 		widgets.centered_float(widgets.scopes)
 	end, { desc = "dap scopes" })
+end
+
+--
+-- CodeCompanion
+--
+M.CodeCompanion = function()
+	vim.keymap.set({ "n", "v" }, "<leader>a", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true, desc = "Code Companion Actions" })
+	vim.keymap.set({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "toggle chat" })
+	vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true, desc = "add to chat" })
 end
 
 return M
